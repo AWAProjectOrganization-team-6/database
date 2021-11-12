@@ -1,0 +1,215 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 12.8 (Ubuntu 12.8-0ubuntu0.20.04.1)
+-- Dumped by pg_dump version 14.0
+
+-- Started on 2021-11-12 14:47:45
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+--
+-- TOC entry 3014 (class 0 OID 16389)
+-- Dependencies: 205
+-- Data for Name: user; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public."user" (user_id, type, username, password, first_name, last_name, phone, email) FROM stdin;
+1	SUPER	ADMIN	000000000000000000000000000000000000000000000000	\N	\N	\N	\N
+2	ADMIN	managerking	000000000000000000000000000000000000000000000000	Luigi	Ferrario	0401233434	luigi@italia.com
+5	ADMIN	pizzapate	000000000000000000000000000000000000000000000000	Pate	Pizzalainen	0502393848	pizzeriat@pizzat.com
+\.
+
+
+--
+-- TOC entry 3018 (class 0 OID 16438)
+-- Dependencies: 209
+-- Data for Name: address; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.address (address_id, user_id, street_address, city, postcode) FROM stdin;
+\.
+
+
+--
+-- TOC entry 3016 (class 0 OID 16419)
+-- Dependencies: 207
+-- Data for Name: restaurant; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.restaurant (restaurant_id, user_id, name, address, price_level, star_rating, type, picture) FROM stdin;
+1	2	Ravintola Toscana	Hallituskatu 35, 90100, Oulu	5	9	Italialainen	\N
+2	2	Ravintola Olimpos	Kirkkokatu 55, 90100, Oulu	4	8	Kreikkalainen	\N
+3	2	Ravintola Hella	Isokatu 13, 90100, Oulu	4	9	Ranskalainen	\N
+4	5	Pizzeria Finlandia	Hallituskatu 31, 90100, Oulu	2	8	Pizzeria	\N
+5	5	Pizzeria Santa Maria	Merikoskenkatu 5E, 90500, Oulu	1	8	Pizzeria	\N
+6	5	Pizzeria Napoli	Puutarhakatu 20, 20100, Turku	2	7	Pizzeria	\N
+7	5	Panda Pizzeria Turku	Puutarhakatu 44, 20100, Turku	1	6	Pizzeria	\N
+8	2	Royal Garden	Rautationkatu 8, 90100, Oulu	3	9	Kiinalainen	\N
+9	2	Ravintola Kiinanmuuri	Sirkkalankatu 27, 20700, Turku	3	8	Kiinalainen	\N
+10	2	Ravintola Sergios	Läntinen Rantakatu 27C, 20100, Turku	3	8	Italialainen	\N
+\.
+
+
+--
+-- TOC entry 3020 (class 0 OID 16480)
+-- Dependencies: 211
+-- Data for Name: operating_hours; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.operating_hours (operating_hours_id, restaurant_id, opening_time, closing_time, kitchen_closing_time, days) FROM stdin;
+1	1	11:00:00+02	21:00:00+02	30	Tue,Wed,Thu
+2	1	11:00:00+02	22:00:00+02	30	Fri,Sat
+3	2	11:00:00+02	22:00:00+02	30	Mon,Tue
+4	2	11:00:00+02	23:00:00+02	30	Wed,Thu
+5	2	12:00:00+02	24:00:00+02	30	Fri,Sat
+6	2	12:30:00+02	21:30:00+02	30	Sun
+7	3	16:00:00+02	22:00:00+02	30	Mon,Tue,Wed,Thu
+8	3	16:00:00+02	23:00:00+02	30	Fri,Sat
+9	4	10:30:00+02	22:00:00+02	15	Mon,Tue,Wed,Thu
+10	4	10:30:00+02	23:00:00+02	15	Fri,Sat
+11	4	12:00:00+02	22:00:00+02	15	Sun
+12	5	10:30:00+02	21:00:00+02	15	Mon,Tue,Wed,Thu
+13	5	11:00:00+02	24:00:00+02	15	Fri,Sat
+14	5	11:00:00+02	22:00:00+02	15	Sun
+\.
+
+
+--
+-- TOC entry 3026 (class 0 OID 16566)
+-- Dependencies: 217
+-- Data for Name: order; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public."order" (order_id, user_id, restaurant_id, status, ready_time) FROM stdin;
+\.
+
+
+--
+-- TOC entry 3022 (class 0 OID 16491)
+-- Dependencies: 213
+-- Data for Name: product; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.product (product_id, restaurant_id, name, description, price, type, picture) FROM stdin;
+\.
+
+
+--
+-- TOC entry 3027 (class 0 OID 16604)
+-- Dependencies: 218
+-- Data for Name: order_product; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.order_product (order_id, product_id) FROM stdin;
+\.
+
+
+--
+-- TOC entry 3029 (class 0 OID 16788)
+-- Dependencies: 220
+-- Data for Name: payment_information; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.payment_information (payment_information_id, user_id, type, card_num, cvv, expiration_date, street_address, city, postcode, first_name, last_name) FROM stdin;
+\.
+
+
+--
+-- TOC entry 3024 (class 0 OID 16548)
+-- Dependencies: 215
+-- Data for Name: special_offer; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.special_offer (offer_id, product_id, precent_off) FROM stdin;
+\.
+
+
+--
+-- TOC entry 3035 (class 0 OID 0)
+-- Dependencies: 208
+-- Name: address_address_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.address_address_id_seq', 1, false);
+
+
+--
+-- TOC entry 3036 (class 0 OID 0)
+-- Dependencies: 210
+-- Name: operating_hours_operating_hours_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.operating_hours_operating_hours_id_seq', 14, true);
+
+
+--
+-- TOC entry 3037 (class 0 OID 0)
+-- Dependencies: 216
+-- Name: order_order_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.order_order_id_seq', 1, false);
+
+
+--
+-- TOC entry 3038 (class 0 OID 0)
+-- Dependencies: 219
+-- Name: payment_information_payment_information_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.payment_information_payment_information_id_seq', 1, false);
+
+
+--
+-- TOC entry 3039 (class 0 OID 0)
+-- Dependencies: 212
+-- Name: product_product_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.product_product_id_seq', 1, false);
+
+
+--
+-- TOC entry 3040 (class 0 OID 0)
+-- Dependencies: 206
+-- Name: restaurant_restaurant_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.restaurant_restaurant_id_seq', 10, true);
+
+
+--
+-- TOC entry 3041 (class 0 OID 0)
+-- Dependencies: 214
+-- Name: special_offer_offer_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.special_offer_offer_id_seq', 1, false);
+
+
+--
+-- TOC entry 3042 (class 0 OID 0)
+-- Dependencies: 204
+-- Name: user_user_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.user_user_id_seq', 5, true);
+
+
+-- Completed on 2021-11-12 14:47:45
+
+--
+-- PostgreSQL database dump complete
+--
+
